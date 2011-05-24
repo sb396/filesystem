@@ -1,0 +1,7 @@
+
+n isExecutable($file) {
+    if is_executable($file){
+        throw new Exception('THis file is not executable');
+    }
+    else return 1/$file;
+}
