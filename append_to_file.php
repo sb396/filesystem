@@ -1,8 +1,8 @@
 <?php
-function append_to_file(){
+function append_to_file($filename,$somecontent){
 
-    $filename = 'test.txt';
-    $somecontent = "Add this to the file\n";
+   
+   
 
     try{
         if (is_dir_writable($filename)) {
@@ -14,7 +14,7 @@ function append_to_file(){
                 fclose($fh);
                 }
             }
-            catch{
+            catch(fileExists $e){
                 echo $e->getMessage();
             }
         
@@ -26,3 +26,4 @@ function append_to_file(){
     }
 }
 ?>
+
