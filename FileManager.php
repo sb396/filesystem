@@ -18,18 +18,18 @@
 		{
 			try
 			{
-				if (file_exists($path . $file))     //confirms nonexistance of file
+				if (!file_exists($path . $file))     //confirms nonexistance of file
 				{
-					throw new Exception('File already exists!');     //throws exception if file already exists
+					fopen($path . $file, 'w+');     //creates file
 				}
 				else
 				{
-					fopen($path . $file, 'w+');     //creates file
+					throw new Exception('File already exists!');     //throws exception if file already exists
 				}
 			}
 			catch(Exception $e)
 			{
-				echo 'Message: ' .$e -> getMessage();     //writes error message to screen
+				echo 'Message: ' . $e->getMessage();     //writes error message to screen
 				logError($e);     //writes error to error log
 			}
 		}
@@ -43,23 +43,23 @@
 					if (is_readable($path . $file))     //confirms that file is readable
 					{
 						fopen($handle = $path . $file, 'r');     //opens file
-						$contents = fread($handle, filesize($path . $file));     //reads contents of file
-						return $contents;     //returns contents of file
+						$content = fread($handle, filesize($path . $file));     //reads contents of file
+						return $content;     //returns contents of file
 						fclose($handle);     //closes file
 					}
 					else
 					{
-						throw new Exception('File is not readable!');
+						throw new Exception('File is not readable!');     //throws exception if file is not readable
 					}	
 				}
 				else
 				{
-					throw new Exception('File does not exist!');
+					throw new Exception('File does not exist!');     //throws exception if file does not exist
 				}	
 			}
 			catch(Exception $e)
 			{
-				echo 'Message: ' .$e -> getMessage();     //writes error message to screen
+				echo 'Message: ' . $e->getMessage();     //writes error message to screen
 				logError($e);     //writes error to error log
 			}
 		}
@@ -68,7 +68,7 @@
 		{
 			try
 			{
-				if (($mode == 'a') || ($mode == 'w'))
+				if (($mode == 'a') || ($mode == 'w'))     //confirms validity of write mode selection
 				{
 					if (file_exists($path . $file))     //confirms that file exists
 					{
@@ -80,22 +80,22 @@
 						}
 						else
 						{
-							throw new Exception('File is not writable!');
+							throw new Exception('File is not writable!');     //throws exception if file is not writable
 						}
 					}
 					else
 					{
-						throw new Exception('File does not exist!');
+						throw new Exception('File does not exist!');     //throws exception if file does not exist
 					}
 				}
 				else
 				{
-					throw new Exception('Invalid write mode selection!');
+					throw new Exception('Invalid write mode selection!');     //throws exception if invalid write mode is selected
 				}
 			}
 			catch(Exception $e)
 			{
-				echo 'Message: ' .$e -> getMessage();     //writes error message to screen
+				echo 'Message: ' . $e->getMessage();     //writes error message to screen
 				logError($e);     //writes error to error log
 			}
 		}
@@ -110,12 +110,12 @@
 				}
 				else
 				{
-					throw new Exception('File does not exist!');
+					throw new Exception('File does not exist!');     //throws exception if files does not exist
 				}
 			}
 			catch(Exception $e)
 			{
-				echo 'Message: ' .$e -> getMessage();     //writes error message to screen
+				echo 'Message: ' . $e->getMessage();     //writes error message to screen
 				logError($e);     //writes error to error log
 			}
 		}
@@ -125,12 +125,12 @@
 			if (file_exists(getLogFile()) && is_writable(getLogFile()))     //confirms that log file exists & is writable
 			{		
 				fopen($handle = getLogFile(), 'a');     //opens error log
-				fwrite($handle, date(DATE_RFC822) . '     ' . $error . '\n');     //writes error to error log
+				fwrite($handle, date(DATE_RFC822) . '     ' . $error . '\n');     //writes date & error to error log
 				fclose($handle);     //closes error log
 			}
 			else
 			{
-				echo 'Error creating error log entry!';
+				echo 'Error creating error log entry!';     //writes error message to screen
 			}
 		}
 	}
