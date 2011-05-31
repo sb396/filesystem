@@ -20,7 +20,8 @@
 			{
 				if (!file_exists($path . $file))     //confirms nonexistance of file
 				{
-					fopen($path . $file, 'w+');     //creates file
+					fopen($handle = $path . $file, 'w+');     //creates new file
+                                              fclose($handle);     //closes newly created file
 				}
 				else
 				{
