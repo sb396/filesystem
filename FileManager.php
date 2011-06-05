@@ -4,14 +4,19 @@
 	{
 		private $logFile;     //location of error log
 		
-		public function setLogFile(string $path, string $file)
+		public function __construct(string $path, string $file)    //constructor method
 		{
 			$logFile = $path . $file;     //sets error log location
+			if (!file_exists($this->logFile))     //confirms nonexistance of error log file
+			{
+				fopen($handle = $this->logFile, 'w+');     //creates error log file if nonexistant
+				fclose($handle);     //closes newly created error log file
+			}
 		}
 		
 		public function getLogFile()
 		{
-			return $logFile;     //returns error log location
+			return $this->logFile;     //returns error log location
 		}
 		
 		public function createFile(string $path, string $file)
@@ -20,8 +25,7 @@
 			{
 				if (!file_exists($path . $file))     //confirms nonexistance of file
 				{
-					fopen($handle = $path . $file, 'w+');     //creates new file
-                                              fclose($handle);     //closes newly created file
+					fopen($path . $file, 'w+');     //creates file
 				}
 				else
 				{
@@ -30,8 +34,8 @@
 			}
 			catch(Exception $e)
 			{
-				echo 'Message: ' . $e->getMessage();     //writes error message to screen
-				logError($e);     //writes error to error log
+				echo 'Message: ' . $error = $e->getMessage();     //writes error message to screen
+				logError($error);     //writes error to error log
 			}
 		}
 		
@@ -60,8 +64,8 @@
 			}
 			catch(Exception $e)
 			{
-				echo 'Message: ' . $e->getMessage();     //writes error message to screen
-				logError($e);     //writes error to error log
+				echo 'Message: ' . $error = $e->getMessage();     //writes error message to screen
+				logError($error);     //writes error to error log
 			}
 		}
 		
@@ -96,8 +100,8 @@
 			}
 			catch(Exception $e)
 			{
-				echo 'Message: ' . $e->getMessage();     //writes error message to screen
-				logError($e);     //writes error to error log
+				echo 'Message: ' . $error = $e->getMessage();     //writes error message to screen
+				logError($error);     //writes error to error log
 			}
 		}
 		
@@ -116,8 +120,8 @@
 			}
 			catch(Exception $e)
 			{
-				echo 'Message: ' . $e->getMessage();     //writes error message to screen
-				logError($e);     //writes error to error log
+				echo 'Message: ' . $error = $e->getMessage();     //writes error message to screen
+				logError($error);     //writes error to error log
 			}
 		}
 		
